@@ -1,0 +1,332 @@
+<div class="panel panel-default" id="prev_cover_panel">
+	<div class="panel-body">
+		<% if(cover) { %>
+			<div class="cover_panel" style="background-image: url('/uploads/cover/<%= cover.main_image %>');" ng-class="{'grid': showGrid}">
+		<% } else { %>
+			<div class="cover_panel" style="background-color: #444;" ng-class="{'grid': showGrid}">
+		<% } %>
+
+
+
+			<div ng-repeat="(i, w) in widgets">
+				<div class="cover_panel_w w_text"  ng-if="w.name == 'time'" ng-style="cover_panel.style(w)">
+					<span style="width: 1000px;">{{w.text}} 22:55</span>
+				</div>
+
+				<div class="cover_panel_w w_text"  ng-if="w.name == 'weather'" ng-style="cover_panel.style(w)">
+					<span style="width: 1000px;">{{w.before_text}} <span style="position: relative;" ng-if="!w.only_temp">солнечно</span> 27°<span style="position: relative;" ng-if="w.show_c">C</span></span>
+				</div>
+
+				<div class="cover_panel_w"  ng-if="w.name == 'last_sub'">
+					<div class="w_avatar" ng-style="{'top': w.avatar_y, 'left': w.avatar_x, 'width': w.avatar_w}">
+						<img src="/img/user_100.jpg" style="border-radius: 50%;" ng-style="{'width': w.avatar_w, 'margin-bottom': (w.avatar_w / 2) * -1, 'margin-left': (w.avatar_w / 2) * -1}">
+					</div>
+					<div class="w_last_sub_text" style="width: 700px;" ng-style="{'top': w.text_pos_y, 'left': w.text_pos_x, 'font-size': w.font_size, 'font-family': w.font_family, 'font-weight': w.font_weight, 'color': w.color}">
+						<span ng-show="w.text_br == false">Александр <span ng-if="w.only_name==false" style="position: relative;">Мухаметзянов</span></span>
+						<span ng-show="w.text_br == true">Александр<span style="bottom: -16px;" ng-if="w.only_name==false">Мухаметзянов</span></span>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="panel panel-default">
+	<div class="panel-heading clearfix">
+		<b style="padding-top: 5px; display: inline-block; font-size: 15px;">Подключеные виджеты</b>
+		<button type="button" class="btn btn-sm btn-success" style="float: right;" ng-click="widgets_modal()"><i class="fa fa-tw fa-plus"></i> Добавить виджет</button>
+	</div>
+	<div class="panel-body widgets" ng-init="$scope.showOpt = 0">
+		<div class="btn-group" ng-repeat="(i, w) in widgets">
+			<button type="button" ng-click="$scope.showOpt = i" class="btn btn-info" ng-class="{'active': $scope.showOpt == i}">{{w_name(w.name)}}</button>
+			<button type="button" ng-click="widgets.splice(i, 1)" class="btn btn-info"><i class="fa fa-close"></i></button>
+		</div>
+
+
+		<div class="widget" ng-repeat="(i, w) in widgets" ng-show="$scope.showOpt == i" style="background-color: #f7f7f7;">
+			<!--div class="widget-info clearfix">
+				<b>{{w_name(w.name)}}</b>
+				<div style="float: right;">
+					<button type="button" ng-click="optShow[i] ? optShow[i]=false : optShow[i]=true" class="btn btn-info"><i class="fa fa-tw fa-cog"></i></button>
+					<button type="button" class="btn btn-info" ng-click="addWidget(w)"><i class="fa fa-tw fa-copy"></i></button>
+					<button type="button" class="btn btn-danger" ng-click="widgets.splice(i, 1)"><i class="fa fa-tw fa-trash"></i></button>
+				</div>
+			</div
+			<div class="widget-opt">-->
+
+				<div class="w_opt" ng-if="w.name == 'time'">
+					<div class="row">
+						<div class="col-xs-4">
+							<b>Позиция X</b><br>
+							<input type="number" class="form-control" ng-model="w.x">
+						</div>
+						<div class="col-xs-4">
+							<b>Позиция Y</b><br>
+							<input type="number" class="form-control" ng-model="w.y">
+						</div>
+						<div class="col-xs-4">
+							<b>Цвет текста</b><br>
+							<input type="text" class="form-control" ng-model="w.color">
+						</div>
+
+						<div class="clearfix" style="margin: 15px 0;"></div>
+
+						<div class="col-xs-4">
+							<b>Размер шрифта</b><br>
+							<input type="number" class="form-control" ng-model="w.font_size">
+						</div>
+						<div class="col-xs-4">
+							<b>Шрифт</b><br>
+							<select class="form-control" ng-model="w.font_family">
+								<option value="Arial">Arial</option>
+							</select>
+						</div>
+						<div class="col-xs-4">
+							<b>Толщина</b><br>
+							<select class="form-control" ng-model="w.font_weight">
+								<option value="200">Normal</option>
+								<option value="600">Bold</option>
+							</select>
+						</div>
+
+						<div class="clearfix" style="margin: 15px 0;"></div>
+
+						<div class="col-xs-4">
+							<b>Часовой пояс</b> (<a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List" target="_blank">доступные значения</a>)<br>
+							<input type="text" class="form-control" ng-model="w.timezone">
+						</div>
+						<div class="col-xs-4">
+							<b>Текст перед временем</b><br>
+							<input type="text" class="form-control" ng-model="w.text">
+						</div>
+					</div>
+				</div><!-- end time -->
+
+				
+				
+
+				<div class="w_opt" ng-if="w.name == 'weather'">
+					<div class="row">
+						<div class="col-xs-4">
+							<b>Позиция X</b><br>
+							<input type="number" class="form-control" ng-model="w.x">
+						</div>
+						<div class="col-xs-4">
+							<b>Позиция Y</b><br>
+							<input type="number" class="form-control" ng-model="w.y">
+						</div>
+						<div class="col-xs-4">
+							<b>Цвет текста</b><br>
+							<input type="text" class="form-control" ng-model="w.color">
+						</div>
+
+						<div class="clearfix" style="margin: 15px 0;"></div>
+
+						<div class="col-xs-4">
+							<b>Размер шрифта</b><br>
+							<input type="number" class="form-control" ng-model="w.font_size">
+						</div>
+						<div class="col-xs-4">
+							<b>Шрифт</b><br>
+							<select class="form-control" ng-model="w.font_family">
+								<option value="Arial">Arial</option>
+							</select>
+						</div>
+						<div class="col-xs-4">
+							<b>Толщина</b><br>
+							<select class="form-control" ng-model="w.font_weight">
+								<option value="200">Normal</option>
+								<option value="600">Bold</option>
+							</select>
+						</div>
+
+						<div class="clearfix" style="margin: 15px 0;"></div>
+
+						<div class="col-xs-4">
+							<b>Город</b> (<a href="http://openweathermap.org/find?q={{w.city}}" target="_blank">проверить наличие в базе</a>)<br>
+							<input type="text" class="form-control" ng-model="w.city">
+						</div>
+						<div class="col-xs-4">
+							<b>Текст перед</b><br>
+							<input type="text" class="form-control" ng-model="w.before_text">
+						</div>
+						<div class="col-xs-4" style="padding-top: 7px;">
+							<label><input type="checkbox" ng-model="w.only_temp"> показывать только температуру</label><br>
+							<label><input type="checkbox" ng-model="w.show_c"> добавлять символ "C" (целисии)</label>
+						</div>
+					</div>
+				</div><!-- end weather -->
+
+
+
+				<div class="w_opt" ng-if="w.name == 'last_sub'">
+					<div class="row">
+						<div class="col-xs-12"><h4>Общие настройки:</h4></div>
+						<div class="col-xs-4">
+							<b>Позиция юзера</b><br>
+							<select class="form-control" ng-model="w.user_pos">
+								<option value="0">1</option>
+								<option value="1">2</option>
+								<option value="2">3</option>
+							</select>
+						</div>
+						<div class="col-xs-4" style="padding-top: 7px;">
+							<input type="checkbox" ng-model="w.text_br"> перенос фамилии на новую строку<br>
+							<input type="checkbox" ng-model="w.only_name"> только имя
+						</div>
+
+						<div class="col-xs-12">
+							<hr>
+							<h4>Настройки аватара:</h4>
+						</div>
+						<div class="col-xs-4">
+							<b>Позиция X</b><br>
+							<input type="number" class="form-control" ng-model="w.avatar_x">
+						</div>
+						<div class="col-xs-4">
+							<b>Позиция Y</b><br>
+							<input type="number" class="form-control" ng-model="w.avatar_y">
+						</div>
+						<div class="col-xs-4">
+							<b>Размер</b><br>
+							<input type="number" class="form-control" ng-model="w.avatar_w">
+						</div>
+
+
+
+						<div class="col-xs-12">
+							<hr>
+							<h4>Настройки имени:</h4>
+						</div>
+
+						<div class="col-xs-4">
+							<b>Размер шрифта</b><br>
+							<input type="number" class="form-control" ng-model="w.font_size">
+						</div>
+						<div class="col-xs-4">
+							<b>Шрифт</b><br>
+							<select class="form-control" ng-model="w.font_family">
+								<option value="Arial">Arial</option>
+							</select>
+						</div>
+						<div class="col-xs-4">
+							<b>Толщина</b><br>
+							<select class="form-control" ng-model="w.font_weight">
+								<option value="200">Normal</option>
+								<option value="600">Bold</option>
+							</select>
+						</div>
+
+						<div class="clearfix" style="margin: 15px 0;"></div>
+
+						<div class="col-xs-4">
+							<b>Позиция X</b><br>
+							<input type="number" class="form-control" ng-model="w.text_pos_x">
+						</div>
+						<div class="col-xs-4">
+							<b>Позиция Y</b><br>
+							<input type="number" class="form-control" ng-model="w.text_pos_y">
+						</div>
+						<div class="col-xs-4">
+							<b>Цвет текста</b><br>
+							<input type="text" class="form-control" ng-model="w.color">
+						</div>
+
+						<!--div class="clearfix" style="margin: 15px 0;"></div>
+
+						<div class="col-xs-4">
+							<b>Выравнивание текста</b><br>
+							<select class="form-control" ng-model="w.text_align">
+								<option value="left">По левому краю</option>
+								<option value="center">По центру</option>
+								<option value="right">По правому краю</option>
+							</select>
+						</div-->
+						
+
+					</div>
+				</div><!-- end last_sub -->
+
+			<!--/div-->
+		</div>
+	</div>
+</div>
+
+
+<div class="panel panel-default">
+	<div class="panel-heading clearfix">
+		<b style="padding-top: 0px; display: inline-block; font-size: 15px;">Настройки публикации</b>
+	</div>
+	<div class="panel-body">
+		<div class="btn-group" style="margin-bottom: 15px;">
+			<button ng-click="cover_opt.resetType = 'cron'" ng-class="{'btn-info': cover_opt.resetType == 'cron'}" type="button" class="btn btn-default">Обновление по таймеру</button>
+			<button ng-click="cover_opt.resetType = 'callback'" ng-class="{'btn-info': cover_opt.resetType == 'callback'}" type="button" class="btn btn-default">Через Callback API</button>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-body" style="background-color: #f7f7f7;">
+				<div class="alert alert-info" ng-if="cover_opt.resetType == 'cron'">
+					<b>Обложка будет автоматически обнавлятся через заданый промежуток времени.</b><br>
+					Мы рекоментуем установить "ключ доступа группы". Это избавит от проблемы с переставанием работы обложки при смене пароля Вконтакте. (<a href="https://youtu.be/QtXl320kTxc" target="_blank">инструкция по созданию ключа</a>)
+				</div>
+
+				<div class="alert alert-info" ng-if="cover_opt.resetType == 'callback'">
+					<b>Обложка будет обновлятся автоматически после того как кто нибудь подпишется на новости вашей группы.</b><br>
+					Данный способ интеграции требует указания "ключа доступа группы" (<a href="https://youtu.be/QtXl320kTxc" target="_blank">инструкция по созданию ключа</a>)<br><br>
+					Если вы используете Callback API для других целей (например для бота), адрес Callback сервера будет перезаписан. Пожалуйста учитывайте это.
+				</div>
+
+				<div class="row">
+					<div class="col-xs-6" ng-if="cover_opt.resetType == 'cron'">
+						<div style="margin-bottom: 15px">
+							<b>Частота обновления:</b>
+							<select class="form-control" ng-model="cover_opt.interval" style="width: 180px; display: inline-block;">
+								<option value="1">Каждую минуту</option>
+								<option value="5">Каждые 5 минут</option>
+								<option value="15">Каждые 15 минут</option>
+								<option value="30">Каждые 30 минут</option>
+								<option value="60">Каждый час</option>
+							</select>
+						</div>
+					</div>
+
+					
+					<div class="col-xs-6">
+						<button class="btn btn-primary" data-toggle="modal" data-target="#set_token">Установить ключ доступа группы</button> 
+						(<span ng-if="cover_opt.resetType == 'cron'">не </span>обязательно)
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<div class="modal fade" id="set_token">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Ключ доступа группы</h4>
+			</div>
+			<div class="modal-body">
+				<label for="group_token" style="width: 100%;">
+					<b>Ключ доступа группы</b> 
+					(<a href="https://youtu.be/QtXl320kTxc" target="_blank">инструкция по созданию</a>)
+				</label><br>
+				<input id="group_token" ng-model="cover_opt.group_token" type="text" class="form-control">
+				<p style="padding-top: 5px;">
+					Ключ доступа должен быть со следующими правами: <b>управление сообществом, фотографии</b>
+				</p>
+				<button type="button" ng-click="checkToken()" class="btn btn-success" ng-disabled="checkTokenProgress == 'load'">Проверить ключ</button> 
+				<b id="key_good" ng-if="checkTokenProgress == 'good'" style="color: #158a15;"><i class="fa fa-tw fa-check"></i> Ключ прошёл проверку!</b>
+				<b id="key_good" ng-if="checkTokenProgress == 'load'"><i class="fa fa-tw fa-spinner fa-pulse"></i> Проверка ключа</b>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
