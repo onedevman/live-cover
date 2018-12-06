@@ -206,10 +206,7 @@
 						</div>
 					</div>
 				</div>
-
-				<!-- <p style="margin-top: 15px; text-align:center;">
-					<a href="https://vk.com/im?media=&sel=-85107772" target="_blank">Напишите нам</a>, если хотите заплатить другим способом.
-				</p> -->
+				
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
@@ -217,7 +214,7 @@
 
 
 <form method="POST" id="yandex_form" action="https://money.yandex.ru/quickpay/confirm.xml" target="_blank" style="display:none;">
-<input type="hidden" name="receiver" value="41001688699221">
+<input type="hidden" name="receiver" value="XXXXXXXXXXXX">
 <input type="hidden" name="formcomment" value="Пополнение счёта на live-cover.ru">
 <input type="hidden" name="short-dest" value="Пополнение счёта на live-cover.ru">
 <input type="hidden" name="label" value="<%= pay_vk_id %>">
@@ -235,13 +232,13 @@
 	<input type="hidden" id="wm_summ" name="LMI_PAYMENT_AMOUNT" value="12.08">
 	<input type="hidden" name="LMI_PAYMENT_DESC" value="Пополнение счёта live-cover.ru для пользователя vk.com/id<%= pay_vk_id %>">
 	<input type="hidden" name="LMI_PAYMENT_NO" value="1234">
-	<input type="hidden" name="LMI_PAYEE_PURSE" value="R368978239902">
+	<input type="hidden" name="LMI_PAYEE_PURSE" value="XXXXXXXXXXXX">
 	<input type="hidden" name="FIELD_1" value="<%= pay_vk_id %>">
 </form>
 
 
 <form method="GET" id="crypto_form" action="https://api.cryptonator.com/api/merchant/v1/startpayment" target="_blank" style="display:none;">
-	<input type="hidden" name="merchant_id" value="a3b5fb517afb710ad699995434bdad08">
+	<input type="hidden" name="merchant_id" value="XXXXXXXXXXXX">
 	<input type="hidden" name="item_name" value="Пополнение счёта на live-cover.ru">
 	<input type="hidden" name="item_description" value="От пользователя vk.com/id<%= pay_vk_id %>">
 	<input type="hidden" name="order_id" value="<%= pay_vk_id %>">
