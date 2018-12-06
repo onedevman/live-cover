@@ -993,7 +993,7 @@ function isLoggedIn(req, res, next) {
 
 
 function isAdmin(req, res, next) {
-	if(req.user.vk_id == 1)
+	if(req.user.vk_id == 696969696)
 		return next();
 
 	res.redirect('/cabinet');

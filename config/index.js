@@ -27,9 +27,14 @@ var app_config = {
    openweathermap_appid: 'XXXXXXXXXXXXXXXXXXXXXX', // погода / https://openweathermap.org/
    youtube_api_key: 'XXXXXXXXXXXXXXXXXXXXXX', // https://developers.google.com/youtube/v3/getting-started?refresh=1
 
+
+
+   /** ==================
+    * ДАННЫЕ ДЛЯ РАБОТЫ С VK
+   ================== */
    vk_clientID: 111111111, // ID приложения / https://vk.com/apps?act=manage
    vk_clientSecret: "XXXXXXXXXXXXXXXXXXXXXX", // Защищённый ключ / https://vk.com/apps?act=manage
-   vk_group_token: "XXXXXXXXXXXXXXXXXXXXXX", // глючь доступа группы с правами на отправку сообщений, нужен для рассылок уведомлений / брать в настройках группы
+   vk_group_token: "XXXXXXXXXXXXXXXXXXXXXX", // ключь доступа группы с правами на отправку сообщений, нужен для рассылок уведомлений / брать в настройках группы
 
 
 
