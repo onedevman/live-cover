@@ -867,7 +867,7 @@ const getPayment = {
 
 		console.log(data)
 
-		let sign = md5(`${config.get('free_kassa_id')}:${data.AMOUNT}:${config.get('free_kassa_secret_1')}:'${data.MERCHANT_ORDER_ID}`);
+		let sign = md5(`${config.get('free_kassa_id')}:${data.AMOUNT}:${config.get('free_kassa_secret_1')}:${data.MERCHANT_ORDER_ID}`);
 		if(sign != data.SIGN) {
 			telegram_alert('хеши не совпали')
 		} else {

@@ -41,8 +41,8 @@ var app_config = {
    /** ==================
     * НАСТРОЙКИ ПРИЕМА ПЛАТЯЖЕЙ
    ================== */
-   free_kassa_id: 'XXXXXXXXXXXXXXXXXXXXXXX',
-   free_kassa_secret_1: 'XXXXXXXXXXXXXXXXXXXXXXX', // https://www.free-kassa.ru/
+   free_kassa_id: 'XXXXXXXXXXXXXXXXXXXXXXX', // https://www.free-kassa.ru/
+   free_kassa_secret_1: 'XXXXXXXXXXXXXXXXXXXXXXX',
    free_kassa_secret_2: 'XXXXXXXXXXXXXXXXXXXXXXX',
    webmoney_secret: "XXXXXXXXXXXXXXXXXXXXXXX", 
    yandex_money_secret: "XXXXXXXXXXXXXXXXXXXXXXX", // https://money.yandex.ru/settings?_openstat=template%3Bipulldown%3Bsettings&w=other
